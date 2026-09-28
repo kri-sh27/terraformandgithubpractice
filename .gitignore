@@ -1,0 +1,39 @@
+# ==========================================
+# Official GitHub Terraform .gitignore
+# ==========================================
+
+# Local .terraform working directory (contains downloaded provider plugins and modules)
+**/.terraform/*
+
+# .tfstate files (contain sensitive infrastructure data and plain-text secrets)
+*.tfstate
+*.tfstate.*
+
+# Crash log files (generated when Terraform crashes)
+crash.log
+crash.*.log
+
+# Exclude all variable files (likely contain environment-specific secrets like API keys/passwords)
+*.tfvars
+*.tfvars.json
+
+# Ignore local override files (used for ad-hoc local configurations)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore transient CLI configuration files
+.terraformrc
+terraform.rc
+
+# ==========================================
+# Recommended Additions
+# ==========================================
+
+# Ignore local execution plans (can accidentally leak resource data)
+*.tfplan
+
+# OPTIONAL: Ignore the dependency lock file. 
+# (Remove the line below if you want to commit the lock file to force consistent provider versions across machines)
+**/.terraform.lock.hcl
