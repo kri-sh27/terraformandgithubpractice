@@ -1,4 +1,4 @@
-name: Terraform CI/CD
+name: Terraform CI
 
 on:
   push:
@@ -10,21 +10,30 @@ on:
       - main
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
   terraform:
-    name: Terraform
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Format Check
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::929897439921:role/GitHubActionsTerraformRole
+          aws-region: ap-south-1
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Terraform Format
         run: terraform fmt -check -recursive
 
       - name: Terraform Init
