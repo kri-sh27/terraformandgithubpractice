@@ -8,16 +8,16 @@ resource "aws_vpc" "myvpc" {
 }
 
 resource "aws_subnet" "sub1" {
-  vpc_id            = aws_vpc.myvpc.id
-  cidr_block        = var.subnet_cidr_sub1
-  availability_zone = "ap-south-1a"
+  vpc_id                  = aws_vpc.myvpc.id
+  cidr_block              = var.subnet_cidr_sub1
+  availability_zone       = "ap-south-1a"
   map_public_ip_on_launch = true
 }
 
 resource "aws_subnet" "sub2" {
-  vpc_id            = aws_vpc.myvpc.id  
-  cidr_block        = var.subnet_cidr_sub2
-  availability_zone = "ap-south-1b"
+  vpc_id                  = aws_vpc.myvpc.id
+  cidr_block              = var.subnet_cidr_sub2
+  availability_zone       = "ap-south-1b"
   map_public_ip_on_launch = true
 }
 
@@ -61,7 +61,7 @@ resource "aws_security_group" "websg" {
   }
   ingress {
     from_port   = 22
-    to_port     = 22  
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -102,11 +102,11 @@ resource "aws_s3_bucket" "example" {
 # }
 
 resource "aws_instance" "webserver1" {
-  ami           = "ami-01a00762f46d584a1"
-  instance_type = "t3.micro"
-  subnet_id     = aws_subnet.sub1.id
-  security_groups = [aws_security_group.websg.id]
-  user_data_base64       = base64encode(file("userdata.sh"))
+  ami              = "ami-01a00762f46d584a1"
+  instance_type    = "t3.micro"
+  subnet_id        = aws_subnet.sub1.id
+  security_groups  = [aws_security_group.websg.id]
+  user_data_base64 = base64encode(file("userdata.sh"))
 
 
   tags = {
@@ -119,7 +119,7 @@ resource "aws_instance" "webserver2" {
   instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.websg.id]
   subnet_id              = aws_subnet.sub2.id
-  user_data_base64 = base64encode(file("userdata1.sh"))
+  user_data_base64       = base64encode(file("userdata1.sh"))
 
   tags = {
     Name = "MyWebServer2"
@@ -145,7 +145,7 @@ resource "aws_lb_target_group" "tg" {
   vpc_id   = aws_vpc.myvpc.id
 
   health_check {
-    path                = "/"
+    path = "/"
     port = "traffic-port"
   }
 }
